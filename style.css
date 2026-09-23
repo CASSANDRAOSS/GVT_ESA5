@@ -1,0 +1,560 @@
+:root {
+    --dunkelblau: #15344d;
+    --mittelblau: #20516a;
+    --tuerkis: #2c9998;
+    --orange: #f28b31;
+    --rosa: #e6788d;
+    --hintergrund: #f5f9fc;
+    --text: #243b50;
+    --rahmen: #d5e2ec;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--hintergrund);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+}
+
+button {
+    font: inherit;
+}
+
+a {
+    color: #135f78;
+}
+
+a:focus-visible,
+button:focus-visible,
+.sprunglink:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 4px;
+}
+
+.sprunglink {
+    position: absolute;
+    top: -80px;
+    left: 20px;
+    z-index: 10;
+    padding: 12px 18px;
+    border-radius: 10px;
+    background: white;
+    color: var(--dunkelblau);
+    font-weight: bold;
+}
+
+.sprunglink:focus {
+    top: 16px;
+}
+
+/* Kopfbereich */
+
+.seitenkopf {
+    min-height: 300px;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 88% 85%,
+            transparent 0 90px,
+            rgb(255 255 255 / 10%) 91px 93px,
+            transparent 94px
+        ),
+        linear-gradient(
+            115deg,
+            var(--dunkelblau),
+            var(--mittelblau)
+        );
+    color: white;
+}
+
+.kopfbereich {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: min(1180px, calc(100% - 40px));
+    min-height: 300px;
+    margin: 0 auto;
+    padding: 38px 220px 75px 0;
+}
+
+.kopftext {
+    max-width: 730px;
+}
+
+.kopfbereich h1 {
+    margin: 8px 0 12px;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1.12;
+}
+
+.einleitung {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.profilbild {
+    position: absolute;
+    right: 30px;
+    bottom: 48px;
+    width: auto;
+    height: 245px;
+    object-fit: contain;
+    object-position: bottom;
+}
+
+.aufgabenbezeichnung {
+    margin: 0;
+    color: #b95423;
+    font-size: 0.76rem;
+    font-weight: bold;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.seitenkopf .aufgabenbezeichnung {
+    color: #a9e2df;
+}
+
+/* Grundaufbau */
+
+main {
+    position: relative;
+    width: min(1180px, calc(100% - 40px));
+    margin: -38px auto 80px;
+}
+
+.darstellungsbereich,
+.dokumentation {
+    padding: 32px;
+    border: 1px solid var(--rahmen);
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 10px 28px rgb(21 52 77 / 9%);
+}
+
+.darstellungsbereich {
+    border-top: 5px solid var(--tuerkis);
+}
+
+.abschnittskopf {
+    max-width: 780px;
+    margin: 0 auto 26px;
+    text-align: center;
+}
+
+.abschnittskopf h2 {
+    margin: 7px 0;
+    color: var(--dunkelblau);
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.abschnittskopf > p:last-child {
+    margin: 0;
+}
+
+/* WebGL-Bühne */
+
+.canvasrahmen {
+    width: min(100%, 1000px);
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid #aac6d3;
+    border-radius: 15px;
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            #e5f8fa,
+            #c8e7ea 70%,
+            #b8d9df
+        );
+    box-shadow: 0 8px 22px rgb(21 52 77 / 10%);
+}
+
+.canvasrahmen canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.statusanzeige {
+    width: fit-content;
+    max-width: 100%;
+    margin: 18px auto 28px;
+    padding: 8px 14px;
+    border: 1px solid #a7d9c8;
+    border-radius: 30px;
+    background: #effaf4;
+    color: #196046;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Kamera und Perle steuern */
+
+.steuerungsraster {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.steuerungskarte {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--rahmen);
+    border-top: 4px solid var(--tuerkis);
+    border-radius: 14px;
+    background: #fbfdff;
+}
+
+.steuerungskarte:nth-child(2) {
+    border-top-color: var(--orange);
+}
+
+.steuerungskarte h3 {
+    margin: 0 0 6px;
+    color: var(--dunkelblau);
+    font-size: 1.18rem;
+}
+
+.steuerungskarte > p {
+    margin: 0 0 16px;
+}
+
+.buttonreihe {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0;
+}
+
+.buttonreihe button {
+    min-height: 46px;
+    padding: 9px 17px;
+    border: 2px solid var(--dunkelblau);
+    border-radius: 9px;
+    background: var(--dunkelblau);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition:
+        background-color 0.2s,
+        transform 0.2s;
+}
+
+.buttonreihe button:hover:not(:disabled) {
+    background: var(--mittelblau);
+    transform: translateY(-2px);
+}
+
+.buttonreihe button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.buttonreihe button:disabled {
+    opacity: 0.48;
+    cursor: not-allowed;
+}
+
+.buttonreihe button[aria-pressed="false"] {
+    background: white;
+    color: var(--dunkelblau);
+}
+
+.buttonreihe button[aria-pressed="false"]:hover {
+    background: #edf7f8;
+}
+
+.wertanzeige {
+    display: inline-block;
+    margin: 4px 0;
+    color: var(--dunkelblau);
+    font-weight: bold;
+}
+
+#tiefeAnzeige {
+    min-width: 90px;
+    text-align: center;
+}
+
+/* Bedienhinweise */
+
+.bedienhinweise {
+    max-width: 1000px;
+    margin: 22px auto 0;
+    padding: 16px 20px;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    background: #fffaf2;
+}
+
+.bedienhinweise h3 {
+    margin: 0 0 8px;
+    color: var(--dunkelblau);
+    font-size: 1rem;
+}
+
+.bedienhinweise ul {
+    margin: 0 0 10px;
+    padding-left: 22px;
+}
+
+.bedienhinweise li + li {
+    margin-top: 4px;
+}
+
+.bedienhinweise p {
+    margin: 0;
+}
+
+kbd {
+    display: inline-block;
+    min-width: 26px;
+    padding: 1px 6px;
+    border: 1px solid #b7c8d3;
+    border-radius: 5px;
+    background: white;
+    color: var(--dunkelblau);
+    font-family: inherit;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Dokumentation */
+
+.dokumentation {
+    margin-top: 42px;
+}
+
+.dokumentationsraster {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.dokumentationskarte {
+    padding: 19px 21px;
+    border: 1px solid var(--rahmen);
+    border-top: 3px solid var(--tuerkis);
+    border-radius: 11px;
+    background: #fbfdff;
+}
+
+.dokumentationskarte:nth-child(2) {
+    border-top-color: var(--orange);
+}
+
+.dokumentationskarte:nth-child(3) {
+    border-top-color: var(--rosa);
+}
+
+.dokumentationskarte:nth-child(4) {
+    border-top-color: var(--dunkelblau);
+}
+
+.dokumentationskarte h3 {
+    margin: 0 0 10px;
+    color: var(--dunkelblau);
+    font-size: 1.05rem;
+}
+
+.dokumentationskarte p {
+    margin: 0 0 11px;
+    font-size: 0.94rem;
+}
+
+.dokumentationskarte p:last-child {
+    margin-bottom: 0;
+}
+
+/* Platz für spätere Screenshots */
+
+.entstehung {
+    margin-top: 42px;
+}
+
+.platzhalter {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    border: 1px dashed #aac6d3;
+    border-radius: 14px;
+    background: white;
+    color: #51677a;
+    text-align: center;
+}
+
+/* Fußbereich */
+
+.seitenfuss {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 18px max(20px, calc((100% - 1180px) / 2));
+    background: var(--dunkelblau);
+    color: white;
+    font-size: 0.85rem;
+}
+
+.seitenfuss p {
+    margin: 0;
+}
+
+/* Kleinere Bildschirme */
+
+@media (max-width: 760px) {
+    .steuerungsraster,
+    .dokumentationsraster {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .kopfbereich {
+        min-height: 330px;
+        padding: 28px 105px 42px 0;
+    }
+
+    .profilbild {
+        right: 0;
+        bottom: 30px;
+        height: 175px;
+    }
+
+    main {
+        width: min(100% - 24px, 1180px);
+        margin-top: -24px;
+    }
+
+    .darstellungsbereich,
+    .dokumentation {
+        padding: 22px 15px;
+    }
+
+    .steuerungskarte {
+        padding: 16px;
+    }
+
+    .seitenfuss {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .buttonreihe button {
+        transition: none;
+    }
+
+    .buttonreihe button:hover:not(:disabled) {
+        transform: none;
+    }
+}
+
+/* Screenshots aus dem Entstehungsprozess */
+
+.slideshow {
+    width: min(760px, 100%);
+    margin: 0 auto;
+    padding: 18px;
+    border: 1px solid var(--rahmen);
+    border-top: 4px solid var(--tuerkis);
+    border-radius: 15px;
+    background: white;
+    box-shadow: 0 8px 22px rgb(21 52 77 / 8%);
+    text-align: center;
+}
+
+.slideshow img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rahmen);
+    border-radius: 8px;
+}
+
+.schrittzaehler {
+    margin: 14px 0 4px;
+    color: #247b7b;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.schrittbeschreibung {
+    margin: 0 0 16px;
+}
+
+.schrittpunkte {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 16px 0 20px;
+}
+
+.schrittpunkt {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 2px solid var(--dunkelblau);
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+}
+
+.schrittpunkt[aria-current="true"] {
+    background: var(--dunkelblau);
+    transform: scale(1.15);
+}
+
+.schrittpunkt:hover {
+    background: var(--tuerkis);
+}
+
+.schrittpunkt:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 4px;
+}
+
+.slideshow-steuerung {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.slideshow-steuerung button {
+    min-height: 44px;
+    padding: 8px 18px;
+    border: 2px solid var(--dunkelblau);
+    border-radius: 8px;
+    background: white;
+    color: var(--dunkelblau);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.slideshow-steuerung button:hover:not(:disabled) {
+    background: var(--dunkelblau);
+    color: white;
+}
+
+.slideshow-steuerung button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}

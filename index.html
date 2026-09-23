@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Eine Unterwasserszene mit beweglicher WebGL-Kamera und einer rekursiv erzeugten Kugel."
+    >
+
+    <title>Kamerabewegung – Unterwasserwelt</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <a class="sprunglink" href="#hauptinhalt">
+        Direkt zum Inhalt
+    </a>
+
+    <header class="seitenkopf">
+        <div class="kopfbereich">
+
+            <div class="kopftext">
+                <p class="aufgabenbezeichnung">
+                    Einsendeaufgabe 5
+                </p>
+
+                <h1>Kamerabewegung</h1>
+
+                <p class="einleitung">
+                    Diesmal lässt sich meine Unterwasserwelt von allen
+                    Seiten betrachten. Zwischen Muschel und Koralle
+                    liegt eine Perle, deren Oberfläche Schritt für
+                    Schritt aus Dreiecken entsteht.
+                </p>
+            </div>
+
+            <img
+                class="profilbild"
+                src="ich2.png"
+                alt="Comicfigur von Cassandra Ludwig, die zur Begrüßung winkt"
+                width="174"
+                height="340"
+            >
+
+        </div>
+    </header>
+
+    <main id="hauptinhalt">
+
+        <section
+            class="darstellungsbereich"
+            aria-labelledby="szeneTitel"
+        >
+
+            <div class="abschnittskopf">
+                <p class="aufgabenbezeichnung">
+                    Die interaktive Szene
+                </p>
+
+                <h2 id="szeneTitel">
+                    Ein Rundgang unter Wasser
+                </h2>
+
+                <p>
+                    Bewege die Kamera um die Szene und verändere,
+                    aus wie vielen Dreiecken die Perle besteht.
+                </p>
+            </div>
+
+            <div class="canvasrahmen">
+                <canvas
+                    id="webglCanvas"
+                    width="1000"
+                    height="650"
+                    aria-label="WebGL-Unterwasserszene mit Muschel, Koralle und rekursiv erzeugter Perle"
+                >
+                    Dein Browser unterstützt das benötigte
+                    Canvas-Element leider nicht.
+                </canvas>
+            </div>
+
+            <p
+                id="webglStatus"
+                class="statusanzeige"
+                role="status"
+                aria-live="polite"
+            >
+                WebGL wird vorbereitet …
+            </p>
+
+            <div class="steuerungsraster">
+
+                <section
+                    class="steuerungskarte"
+                    aria-labelledby="kameraTitel"
+                >
+                    <h3 id="kameraTitel">
+                        Kamera bewegen
+                    </h3>
+
+                    <p>
+                        Die Kamera fährt auf einer Kreisbahn um
+                        die Szene.
+                    </p>
+
+                    <div class="buttonreihe">
+                        <button
+                            id="kameraLinks"
+                            type="button"
+                            aria-label="Kamera nach links bewegen"
+                        >
+                            ← Links
+                        </button>
+
+                        <button
+                            id="kameraRechts"
+                            type="button"
+                            aria-label="Kamera nach rechts bewegen"
+                        >
+                            Rechts →
+                        </button>
+                    </div>
+
+                    <div class="buttonreihe">
+                        <button
+                            id="kameraNaeher"
+                            type="button"
+                        >
+                            Näher
+                        </button>
+
+                        <button
+                            id="kameraWeiter"
+                            type="button"
+                        >
+                            Weiter weg
+                        </button>
+                    </div>
+
+                    <p
+                        id="kameraAnzeige"
+                        class="wertanzeige"
+                        aria-live="polite"
+                    >
+                        Kameraposition wird geladen …
+                    </p>
+                </section>
+
+                <section
+                    class="steuerungskarte"
+                    aria-labelledby="perleTitel"
+                >
+                    <h3 id="perleTitel">
+                        Die Perle untersuchen
+                    </h3>
+
+                    <p>
+                        Mit jeder Stufe werden die Dreiecke
+                        auf der Kugeloberfläche weiter unterteilt.
+                    </p>
+
+                    <div class="buttonreihe">
+                        <button
+                            id="tiefeMinus"
+                            type="button"
+                            aria-label="Rekursionstiefe verringern"
+                        >
+                            −
+                        </button>
+
+                        <output
+                            id="tiefeAnzeige"
+                            class="wertanzeige"
+                            aria-live="polite"
+                        >
+                            Stufe wird geladen …
+                        </output>
+
+                        <button
+                            id="tiefePlus"
+                            type="button"
+                            aria-label="Rekursionstiefe erhöhen"
+                        >
+                            +
+                        </button>
+                    </div>
+
+                    <div class="buttonreihe">
+                        <button
+                            id="linienButton"
+                            type="button"
+                            aria-pressed="true"
+                        >
+                            Dreieckslinien ausblenden
+                        </button>
+                    </div>
+                </section>
+
+            </div>
+
+            <aside
+                class="bedienhinweise"
+                aria-labelledby="bedienungTitel"
+            >
+                <h3 id="bedienungTitel">
+                    Bedienung mit der Tastatur
+                </h3>
+
+                <ul>
+                    <li>
+                        <kbd>←</kbd> und <kbd>→</kbd> bewegen die
+                        Kamera um die Szene.
+                    </li>
+
+                    <li>
+                        <kbd>N</kbd> bringt die Kamera näher heran.
+                    </li>
+
+                    <li>
+                        <kbd>Shift</kbd> + <kbd>N</kbd> bewegt sie
+                        weiter weg.
+                    </li>
+                </ul>
+
+                <p>
+                    Alle Funktionen lassen sich auch über die
+                    Buttons bedienen.
+                </p>
+            </aside>
+
+        </section>
+
+        <section
+            class="dokumentation"
+            aria-labelledby="dokumentationTitel"
+        >
+
+            <div class="abschnittskopf">
+                <p class="aufgabenbezeichnung">
+                    Informationen zur Umsetzung
+                </p>
+
+                <h2 id="dokumentationTitel">
+                    Dokumentation
+                </h2>
+
+                <p>
+                    Wie die Szene, die Kamerafahrt und die
+                    Oberfläche der Perle entstanden sind.
+                </p>
+            </div>
+
+            <div class="dokumentationsraster">
+
+                <article class="dokumentationskarte">
+                    <h3>Idee und Gestaltung</h3>
+
+                    <p>
+                        Nach den einzelnen Flächen aus Aufgabe 4 
+                        wollte ich diesmal eine zusammenhängende 
+                        3D-Szene gestalten. Da sich das maritime 
+                        Thema inzwischen durch meine Aufgaben zieht, 
+                        habe ich mich wieder für eine kleine Unterwasserwelt 
+                        entschieden. Sie besteht aus einem Meeresboden, einer 
+                        Muschel, einer Koralle und einer Perle.
+                    </p>
+
+                    <p>
+                        Durch die bewegliche Kamera kann ich die Szene von allen 
+                        Seiten betrachten. So lässt sich gut erkennen, wie die 
+                        einzelnen Formen im Raum angeordnet sind und wie 
+                        unterschiedlich sie je nach Blickrichtung wirken.
+                    </p>
+                </article>
+
+                <article class="dokumentationskarte">
+                    <h3>Technische Umsetzung</h3>
+
+                    <p>
+                        Die Unterwasserszene wird mit WebGL aus vielen Dreiecken 
+                        aufgebaut. Die Punkte für die Muschel und die Koralle werden 
+                        im JavaScript-Code berechnet und anschließend zu räumlichen 
+                        Flächen verbunden. Zusammen mit dem Meeresboden und der Perle 
+                        entsteht daraus die fertige Szene.
+                    </p>
+
+                    <p>
+                        Die Kamera bewegt sich auf einer Kreisbahn um die Y-Achse. 
+                        Ihre Position in der XZ-Ebene wird mit Sinus und Kosinus aus 
+                        dem aktuellen Winkel und dem Abstand berechnet. Eine eigene 
+                        <code>lookAt</code>-Berechnung sorgt dafür, dass die Kamera dabei immer auf 
+                        die Mitte der Szene gerichtet bleibt.
+                    </p>
+                </article>
+
+                <article class="dokumentationskarte">
+                    <h3>Die rekursive Perle</h3>
+
+                    <p>
+                        Die Perle wird Schritt für Schritt berechnet und gespeichert. 
+                        Als Ausgangsform dient ein Oktaeder mit acht Dreiecksflächen. 
+                        Bei jedem Rekursionsschritt wird jedes Dreieck in vier kleinere 
+                        Dreiecke geteilt.
+                    </p>
+
+                    <p>
+                        Die neu entstehenden Punkte werden anschließend auf die 
+                        Kugeloberfläche gesetzt. Dadurch wird die Form mit jeder 
+                        Stufe runder. In Stufe 0 besteht sie aus 8 Dreiecken, in 
+                        Stufe 1 aus 32, in Stufe 2 aus 128, in Stufe 3 aus 512 
+                        und in Stufe 4 aus 2.048 Dreiecken.
+                    </p>
+                    
+                    <p>
+                        Über Plus und Minus kann die Rekursionstiefe direkt auf 
+                        der Webseite verändert werden. Die Linien der Dreiecke 
+                        lassen sich zusätzlich ein- und ausblenden.
+                    </p>
+                </article>
+
+                <article class="dokumentationskarte">
+                    <h3>Quellen und Prüfung</h3>
+
+                    <p>
+                        Für die rekursive Erzeugung der Perle habe ich mich an der 
+                        Lerneinheit GRU des Kursmaterials orientiert. Die dort 
+                        beschriebene Unterteilung eines Oktaeders bildete die Grundlage 
+                        für meine Kugel.
+
+                    </p>
+
+                    <p>
+                        Für die Kreisbahn und die Ausrichtung der Kamera habe ich die 
+                        Lerneinheit KAP verwendet. Ergänzend half mir die  
+                        <a
+                            href="https://developer.mozilla.org/de/docs/Web/API/WebGL_API/WebGL_model_view_projection"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            WebGL-Erklärung von MDN
+                        </a>
+                        dabei, das Zusammenspiel von Ansicht und Projektion besser zu verstehen.
+                    </p>
+
+                    <p>
+                        Die Unterwasserszene, die Anordnung der Formen und die farbliche Gestaltung wurden 
+                        für diese Aufgabe angepasst. Alle Buttons und Tastatureingaben sowie die verschiedenen 
+                        Rekursionsstufen habe ich in Google Chrome getestet. Zusätzlich wurde die Entwicklerkonsole 
+                        auf Fehlermeldungen geprüft.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <section
+            class="entstehung"
+            aria-labelledby="entstehungTitel"
+        >
+
+            <div class="abschnittskopf">
+                <p class="aufgabenbezeichnung">
+                    Entstehungsprozess
+                </p>
+
+                <h2 id="entstehungTitel">
+                    Schritt für Schritt zur Unterwasserwelt
+                </h2>
+
+                <p>
+                    An diesen Screenshots sieht man, wie zuerst
+                    die Szene und danach die rekursive Perle
+                    entstanden sind.
+                </p>
+            </div>
+
+            <div class="slideshow">
+
+                <img
+                    id="schrittBild"
+                    src="fortschritt/schritt_01.png"
+                    alt="Erster Zwischenstand: Muschel und Koralle ohne Perle"
+                >
+
+                <p
+                    id="schrittZaehler"
+                    class="schrittzaehler"
+                    aria-live="polite"
+                >
+                    Bild 1 von 3
+                </p>
+
+                <p
+                    id="schrittBeschreibung"
+                    class="schrittbeschreibung"
+                >
+                    Zuerst habe ich den Meeresboden, die Muschel
+                    und die Koralle aufgebaut und die Kamerafahrt
+                    getestet.
+                </p>
+
+                <div
+                    id="schrittpunkte"
+                    class="schrittpunkte"
+                    aria-label="Entwicklungsschritte"
+                ></div>
+
+                <div class="slideshow-steuerung">
+                    <button
+                        id="schrittZurueck"
+                        type="button"
+                        disabled
+                    >
+                        Zurück
+                    </button>
+
+                    <button
+                        id="schrittWeiter"
+                        type="button"
+                    >
+                        Weiter
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="seitenfuss">
+        <p>EA 5 · Kamerabewegung</p>
+        <p>Erstellt von Cassandra Ludwig</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
